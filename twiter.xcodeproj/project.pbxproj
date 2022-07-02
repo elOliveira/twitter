@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F57C3E7286FFD6B0079226E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57C3E6286FFD6B0079226E /* LoginController.swift */; };
 		4F57C3E9286FFD8C0079226E /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57C3E8286FFD8C0079226E /* RegistrationController.swift */; };
+		4F86EE2A2870491D003B998C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86EE292870491D003B998C /* Utilities.swift */; };
 		5D8F53FB28431351002C92A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8F53FA28431351002C92A4 /* AppDelegate.swift */; };
 		5D8F53FD28431351002C92A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8F53FC28431351002C92A4 /* SceneDelegate.swift */; };
 		5D8F540428431352002C92A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8F540328431352002C92A4 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		4F57C3E6286FFD6B0079226E /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F57C3E8286FFD8C0079226E /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		4F86EE292870491D003B998C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5D8F53F728431351002C92A4 /* twiter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twiter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8F53FA28431351002C92A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D8F53FC28431351002C92A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				5D8F541D28431C6D002C92A4 /* Extensions.swift */,
+				4F86EE292870491D003B998C /* Utilities.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			files = (
 				5D8F541E28431C6D002C92A4 /* Extensions.swift in Sources */,
 				5D8F5418284317BB002C92A4 /* FeedController.swift in Sources */,
+				4F86EE2A2870491D003B998C /* Utilities.swift in Sources */,
 				5D8F541A284317CD002C92A4 /* ExploreController.swift in Sources */,
 				5D8F53FB28431351002C92A4 /* AppDelegate.swift in Sources */,
 				5D8F5416284317AB002C92A4 /* MainTabController.swift in Sources */,
