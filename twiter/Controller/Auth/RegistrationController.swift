@@ -5,8 +5,8 @@
 //  Created by cit on 02/07/22.
 //
 
-import Foundation
 import UIKit
+import Firebase
 
 class RegistrationController: UIViewController{
     //MARK: - Properties
@@ -70,6 +70,7 @@ class RegistrationController: UIViewController{
     
     private let passwordTextField: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "Password")
+        tf.isSecureTextEntry = true
         return tf
     }()
     
@@ -92,7 +93,19 @@ class RegistrationController: UIViewController{
     @objc func handleAddProfilePhoto(){
         present(imagePicker,animated: true, completion: nil)
     }
-    @objc func handleRegister(){}
+    @objc func handleRegister(){
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: Error is \(error.localizedDescription)")
+                return
+            }
+            
+            print("Debug: Sucessfully registered user")
+        }
+    }
 
     @objc func handleShowLogin(){
         dismiss(animated: true)

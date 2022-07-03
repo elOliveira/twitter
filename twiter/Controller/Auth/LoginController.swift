@@ -5,8 +5,8 @@
 //  Created by cit on 02/07/22.
 //
 
-import Foundation
 import UIKit
+import Firebase
 
 class LoginController: UIViewController {
     //MARK: - Properties
