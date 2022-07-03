@@ -17,7 +17,7 @@ class RegistrationController: UIViewController{
         let button = UIButton()
         button.setImage(image, for: .normal)
         button.tintColor = .red
-        button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
     
@@ -53,13 +53,13 @@ class RegistrationController: UIViewController{
         button.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize:20)
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
     
     private let hasHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an acount?"," Login In")
-        button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(handleShowLogin), for: .touchUpInside)
         return button
     }()
     
