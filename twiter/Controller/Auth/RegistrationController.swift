@@ -11,6 +11,7 @@ import Firebase
 class RegistrationController: UIViewController{
     //MARK: - Properties
     private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     private let plusPhotoButton: UIButton = {
         let image = UIImage(imageLiteralResourceName: "plus_photo")
@@ -93,17 +94,60 @@ class RegistrationController: UIViewController{
     @objc func handleAddProfilePhoto(){
         present(imagePicker,animated: true, completion: nil)
     }
+    
     @objc func handleRegister(){
+        guard let profileImage = profileImage else {
+            print("DEBUG: Please select a profile image...")
+            return
+        }
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
+        guard let fullName = fullNameTextField.text else { return }
+        guard let userName = userNameTextField.text else { return }
+        print("OK 1")
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        print("OK 2")
+
+        let filename = NSUUID().uuidString
+        print("OK 3")
+
+        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
+        print("OK 4")
+
         
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if let error = error {
-                print("DEBUG: Error is \(error.localizedDescription)")
-                return
+        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+            print("OK 5")
+
+            storageRef.downloadURL{ (url, error) in
+                print("OK 6")
+
+//                guard let profileImageUrl = url?.absoluteString else { return } nao ta entrando
+                print("OK 7")
+
+                
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    print("OK 8")
+
+                    if let error = error {
+                        print("DEBUG: Error is \(error.localizedDescription)")
+                        return
+                    }
+                    print("OK 9")
+
+                    guard let uid = result?.user.uid else { return }
+                    print("OK 10")
+
+                    let values = ["email":email,"password":password,"fullName":fullName,"userName":userName]
+                    print("OK 11")
+
+
+                    REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+                        print("DEBUG: Successfully updated user information...")
+                    }
+                    print("OK 12")
+
+                }
             }
-            
-            print("Debug: Sucessfully registered user")
         }
     }
 
@@ -163,6 +207,7 @@ extension RegistrationController: UIImagePickerControllerDelegate,UINavigationCo
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return  }
+        self.profileImage = profileImage
         
         plusPhotoButton.layer.borderColor = UIColor.white.cgColor
         plusPhotoButton.layer.borderWidth = 3
@@ -171,8 +216,6 @@ extension RegistrationController: UIImagePickerControllerDelegate,UINavigationCo
         plusPhotoButton.imageView?.contentMode = .scaleAspectFill
         plusPhotoButton.imageView?.clipsToBounds = true
 
-        
-        
         self.plusPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
         
         dismiss(animated: true,completion: nil)

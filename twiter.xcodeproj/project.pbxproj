@@ -10,6 +10,7 @@
 		4F57C3E7286FFD6B0079226E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57C3E6286FFD6B0079226E /* LoginController.swift */; };
 		4F57C3E9286FFD8C0079226E /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57C3E8286FFD8C0079226E /* RegistrationController.swift */; };
 		4F71E07228711711002DC574 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E07128711711002DC574 /* GoogleService-Info.plist */; };
+		4F71E075287206A2002DC574 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71E074287206A2002DC574 /* Constants.swift */; };
 		4F86EE2A2870491D003B998C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86EE292870491D003B998C /* Utilities.swift */; };
 		5D8F53FB28431351002C92A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8F53FA28431351002C92A4 /* AppDelegate.swift */; };
 		5D8F53FD28431351002C92A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8F53FC28431351002C92A4 /* SceneDelegate.swift */; };
@@ -29,6 +30,7 @@
 		4F57C3E6286FFD6B0079226E /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		4F57C3E8286FFD8C0079226E /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		4F71E07128711711002DC574 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4F71E074287206A2002DC574 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F86EE292870491D003B998C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		57C2EDD8F47CC38FFCBCBFE7 /* Pods-twiter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-twiter.release.xcconfig"; path = "Target Support Files/Pods-twiter/Pods-twiter.release.xcconfig"; sourceTree = "<group>"; };
 		5D8F53F728431351002C92A4 /* twiter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twiter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 			children = (
 				5D8F541D28431C6D002C92A4 /* Extensions.swift */,
 				4F86EE292870491D003B998C /* Utilities.swift */,
+				4F71E074287206A2002DC574 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				5D8F541C284317E8002C92A4 /* NotificationsController.swift in Sources */,
 				5D8F53FD28431351002C92A4 /* SceneDelegate.swift in Sources */,
 				4F57C3E7286FFD6B0079226E /* LoginController.swift in Sources */,
+				4F71E075287206A2002DC574 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
