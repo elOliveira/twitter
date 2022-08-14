@@ -104,48 +104,34 @@ class RegistrationController: UIViewController{
         guard let password = passwordTextField.text else { return }
         guard let fullName = fullNameTextField.text else { return }
         guard let userName = userNameTextField.text else { return }
-        print("OK 1")
+        
         guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-        print("OK 2")
-
         let filename = NSUUID().uuidString
-        print("OK 3")
-
         let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
-        print("OK 4")
-
         
         storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            print("OK 5")
-
             storageRef.downloadURL{ (url, error) in
-                print("OK 6")
+                guard let profileImageUrl = url?.absoluteString else { return }
 
-//                guard let profileImageUrl = url?.absoluteString else { return } nao ta entrando
-                print("OK 7")
-
-                
                 Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    print("OK 8")
-
                     if let error = error {
                         print("DEBUG: Error is \(error.localizedDescription)")
                         return
                     }
-                    print("OK 9")
-
+                    
                     guard let uid = result?.user.uid else { return }
-                    print("OK 10")
-
-                    let values = ["email":email,"password":password,"fullName":fullName,"userName":userName]
-                    print("OK 11")
-
-
+                    let values = [
+                          "email":email,
+                          "password":password,
+                          "fullName":fullName,
+                          "userName":userName,
+                          "profileImageUrl":profileImageUrl
+                    ]
+                                        
                     REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
                         print("DEBUG: Successfully updated user information...")
                     }
-                    print("OK 12")
-
+                    
                 }
             }
         }
