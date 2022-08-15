@@ -107,9 +107,11 @@ class RegistrationController: UIViewController{
         
         let credentials = AuthCredentials(email: email, password: password, fullName: fullName, userName: userName, profileImage: profileImage)
         
-        AuthService.shared.registerUser(credentials: credentials) { (error,ref) in
-            print("HandleRegister deu bom")
-            //handle update user interface here...
+        AuthService.shared.registerUser(credentials: credentials) {(error,ref) in
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            tab.viewDidLoad()
+            self.dismiss(animated: true)
         }
     }
 

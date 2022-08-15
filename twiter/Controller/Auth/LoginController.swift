@@ -73,14 +73,17 @@ class LoginController: UIViewController {
                 print("Debug deu erro ao fazer o login : \(error.localizedDescription)")
                 return
             }
-            print("Debug deu bom ao fazer o login")
+            
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            tab.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true)
         }
     }
     
     @objc func handleShowSignUp(){
         let registrationController = RegistrationController()
-        registrationController.modalPresentationStyle = .fullScreen
-        present(registrationController, animated: true)
+        navigationController?.pushViewController(registrationController, animated: true)
     }
     //MARK: - Helpers
     

@@ -38,8 +38,8 @@ class MainTabController: UITabBarController {
             }
         } else {
             print("ta log")
-            configureUi()
             configureViewControllers()
+            configureUi()
         }
     }
     
@@ -53,7 +53,7 @@ class MainTabController: UITabBarController {
     // MARK: - Selectors
 
     @objc func actionButtonTapped(){
-        print("APERTOU")
+        logUserOut()
     }
     
     // MARK: - Helpers
@@ -88,7 +88,7 @@ class MainTabController: UITabBarController {
         viewControllers = [navFeed,navExplore,navNotifications,navConversations]
     }
     
-    func templateNavigationController(image: UIImage?,rootViewController: UIViewController)-> UINavigationController{
+    func templateNavigationController(image: UIImage?,rootViewController: UIViewController) -> UINavigationController{
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = image
         nav.navigationBar.barTintColor = .white
