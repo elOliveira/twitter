@@ -1,0 +1,58 @@
+//
+//  AuthService.swift
+//  twiter
+//
+//  Created by cit on 14/08/22.
+//
+
+import Foundation
+import Firebase
+
+
+struct AuthCredentials {
+    let email: String
+    let password: String
+    let fullName: String
+    let userName: String
+    let profileImage: UIImage
+}
+
+class AuthService {
+    static let shared = AuthService()
+
+    func registerUser(credentials: AuthCredentials, completion: @escaping(Error?, DatabaseReference) -> Void){
+        let email = credentials.email
+        let password = credentials.password
+        let fullName = credentials.fullName
+        let userName = credentials.userName
+        let profileImage = credentials.profileImage
+
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        let filename = NSUUID().uuidString
+        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
+
+        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+            storageRef.downloadURL{ (url, error) in
+                guard let profileImageUrl = url?.absoluteString else { return }
+
+                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                    if let error = error {
+                        print("DEBUG: Error is \(error.localizedDescription)")
+                        return
+                    }
+
+                    guard let uid = result?.user.uid else { return }
+                    let values = [
+                          "email":email,
+                          "password":password,
+                          "fullName":fullName,
+                          "userName":userName,
+                          "profileImageUrl":profileImageUrl
+                    ]
+
+                    REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                }
+            }
+        }
+    }
+}
