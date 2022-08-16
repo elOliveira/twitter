@@ -70,7 +70,11 @@ class MainTabController: UITabBarController {
     // MARK: - Selectors
 
     @objc func actionButtonTapped(){
-        logUserOut()
+        guard let user = user else { return }
+        let uploadTweetController = UploadTweetController(user:user)
+        let nav = UINavigationController(rootViewController: uploadTweetController)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     // MARK: - Helpers
@@ -88,11 +92,12 @@ class MainTabController: UITabBarController {
         actionButton.layer.cornerRadius = 56/2
     }
     
+    
     func configureViewControllers(){
         
         let feed = FeedController()
         let navFeed =  templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: feed)
-        //
+        
         let explore = ExploreController()
         let navExplore =  templateNavigationController(image: UIImage(named: "search_unselected"), rootViewController: explore)
 
