@@ -13,7 +13,7 @@ class User {
     let password: String
     let fullName: String
     let userName: String
-    let profileImageUrl: String
+    var profileImageUrl: URL?
     
     init(uid:String, dictionary:[String: AnyObject]){
         self.uid = uid
@@ -21,6 +21,11 @@ class User {
         self.password = dictionary["password"] as? String  ?? ""
         self.fullName = dictionary["fullName"] as? String  ?? ""
         self.userName = dictionary["userName"] as? String  ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"] as? String  ?? ""
+        
+        if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
+            guard let url = URL(string: profileImageUrlString) else { return }
+            self.profileImageUrl = url
+        }
+        
     }
 }
