@@ -21,6 +21,9 @@ class FeedController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUi()
+        TweetService.shared.fetchTweets { tweet in
+            print("resultado aqui oh -> \(tweet)\n")
+        }
     }
     
     func configureUi() {

@@ -15,7 +15,7 @@ class CaptionTextView: UITextView {
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .darkGray
         label.text = "What's happenning?"
-         return label
+        return label
     }()
     // MARK: - Lifecycle
     
