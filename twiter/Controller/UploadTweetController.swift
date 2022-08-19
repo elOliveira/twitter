@@ -70,7 +70,7 @@ class UploadTweetController: UIViewController {
         }
     }
     
-    // MARK: - API
+    // MARK: - AP I
     // MARK: - Helpers
     func configureUI(){
         view.backgroundColor = .white

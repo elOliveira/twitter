@@ -12,10 +12,10 @@ class TweetService {
     static let shared = TweetService()
     
     func uploadTweet(caption: String, completion: @escaping(Error?, DatabaseReference) -> Void){
-        guard let uid  = Auth.auth().currentUser?.uid else { return }
+        guard let selfUid  = Auth.auth().currentUser?.uid else { return }
         
         let values = [
-            "uid":       uid,
+            "uidUserCreatedTweet": selfUid,
             "timestamp": Int(NSDate().timeIntervalSince1970),
             "likes":     0,
             "retweets":  0,
@@ -30,10 +30,14 @@ class TweetService {
         
         REF_TWEETS.observe(.childAdded){ snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let uidUserCreatedTweet = dictionary["uidUserCreatedTweet"] as? String else { return }
             let tweetId = snapshot.key
-            let tweet = Tweet(tweetID: tweetId, dictionary: dictionary)
-            tweets.append(tweet)
-            completion(tweets)
+            
+            UserService.shared.fetchUser(uid: uidUserCreatedTweet) { user in
+                let tweet = Tweet(user: user, tweetID: tweetId, dictionary: dictionary)
+                tweets.append(tweet)
+                completion(tweets)
+            }
         }
     }
 }
