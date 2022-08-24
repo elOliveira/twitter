@@ -122,8 +122,7 @@ class ProfileHeader : UICollectionReusableView {
     // MARK: - UI Setup
 
     func configureUI(){
-        backgroundColor = .purple
-        
+        backgroundColor = .white
         addSubview(containerView)
         containerView.anchor(
             top: topAnchor,
@@ -178,6 +177,14 @@ class ProfileHeader : UICollectionReusableView {
             left:leftAnchor,
             paddingTop:8,
             paddingLeft:12
+        )
+        
+        addSubview(filterBar)
+        filterBar.anchor(
+            left:leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            height: 50
         )
         
         addSubview(underlineView)

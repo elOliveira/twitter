@@ -29,6 +29,8 @@ class ProfileFilterView: UIView{
     // MARK: - Lifecycle
     override init(frame: CGRect){
         super.init(frame: frame)
+        backgroundColor = .red
+
         collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier3)
         
         let selectedIndexPath = IndexPath(row: 0, section: 0)
