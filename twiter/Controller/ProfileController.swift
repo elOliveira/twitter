@@ -7,11 +7,11 @@
 
 import UIKit
 
-private let reuseIdentifier2 = "TweetCell"
+private let reuseIdentifier = "TweetCell"
 private let headerIdentifier = "ProfileHeader"
 
 class ProfileController: UICollectionViewController {
-    private let user: User?
+    private var user: User?
     private var tweets = [Tweet](){
         didSet{
             collectionView.reloadData()
@@ -31,6 +31,8 @@ class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         fetchTweets()
+        checkIfUserIsFollowed()
+        chechStars()
 
     }
     
@@ -51,10 +53,27 @@ class ProfileController: UICollectionViewController {
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         
-        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier2)
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
     }
     
+    func checkIfUserIsFollowed(){
+        guard let user = user else { return }
+
+        UserService.shared.checkIfUserIsFollowed(uid : user.uid){ isFollowed in
+            self.user?.isFolowed = isFollowed
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func chechStars(){
+        guard let user = user else { return }
+
+        UserService.shared.fetchUserStars(uid:user.uid) { stats in
+            self.user?.stats = stats
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - Extensions
@@ -84,7 +103,7 @@ extension ProfileController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier2, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
         return cell
     }
@@ -92,6 +111,25 @@ extension ProfileController {
 
 // MARK: -ProfileHeaderDelegate
 extension ProfileController: ProfileHeaderDelegate {
+    func handleEditProfileFollow(_ header: ProfileHeader) {
+        guard let user = user else { return }
+        
+        if user.isCurrentUser { return }
+            
+        if (user.isFolowed) {
+            UserService.shared.unfollowUser(uid: user.uid) { (ref, err) in
+                self.user?.isFolowed = false
+                self.collectionView.reloadData()
+            }
+        } else {
+            UserService.shared.followUser(uid: user.uid) { (ref, err) in
+                self.user?.isFolowed = true
+                self.collectionView.reloadData()
+            }
+        }
+        
+    }
+    
     func handleDismissal() {
         navigationController?.popViewController(animated: true)
     }

@@ -6,7 +6,8 @@
 //
 
 import UIKit
-private let reuseIdentifier3 = "ProfileFilterCell"
+
+private let reuseIdentifier = "ProfileFilterCell"
 
 protocol ProfileFilterViewDelegate: AnyObject {
     func filterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath )
@@ -29,9 +30,7 @@ class ProfileFilterView: UIView{
     // MARK: - Lifecycle
     override init(frame: CGRect){
         super.init(frame: frame)
-        backgroundColor = .red
-
-        collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier3)
+        collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         let selectedIndexPath = IndexPath(row: 0, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
@@ -54,10 +53,9 @@ extension ProfileFilterView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier3, for: indexPath) as! ProfileFilterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileFilterCell
         let option = ProfileFilterOptions(rawValue: indexPath.row)
         cell.option = option
-        print("aqui \(option?.description)")
         return cell
     }
 }
