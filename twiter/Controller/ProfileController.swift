@@ -97,7 +97,6 @@ extension ProfileController : UICollectionViewDelegateFlowLayout{
         let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
         let captionHeight = viewModel.size(forWidth: view.frame.width).height
         return CGSize(width: view.frame.width, height: captionHeight + 72)
-       // return CGSize(width: view.frame.width, height: 120)// TODO: - AJUSTAR ALTURA UTILIZANDO o size da vm
     }
 }
 // MARK: - UICollectionViewDataSource/Delegate
@@ -123,7 +122,6 @@ extension ProfileController {
 extension ProfileController: ProfileHeaderDelegate {
     func handleEditProfileFollow(_ header: ProfileHeader) {
         guard let user = user else { return }
-        
         if user.isCurrentUser { return }
             
         if (user.isFolowed) {
@@ -137,7 +135,6 @@ extension ProfileController: ProfileHeaderDelegate {
                 self.collectionView.reloadData()
             }
         }
-        
     }
     
     func handleDismissal() {

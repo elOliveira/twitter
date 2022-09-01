@@ -29,7 +29,6 @@ class TweetController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
@@ -46,7 +45,6 @@ class TweetController: UICollectionViewController {
     func fetchReplies(){
         TweetService.shared.fetchReplies(forTweet: tweet) { replies in
             self.replies = replies
-            
         }
     }
     //MARK: - Helpers
@@ -90,6 +88,8 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 120)
+        let viewModel = TweetViewModel(tweet: replies[indexPath.row])
+        let captionHeight = viewModel.size(forWidth: view.frame.width).height
+        return CGSize(width: view.frame.width, height: captionHeight + 72)
     }	
 }
