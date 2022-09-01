@@ -116,7 +116,7 @@ class RegistrationController: UIViewController{
     }
 
     @objc func handleShowLogin(){
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     //MARK: - Helpers
     

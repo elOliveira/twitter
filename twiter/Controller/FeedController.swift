@@ -71,16 +71,9 @@ class FeedController: UICollectionViewController {
     }
 
 }
-// MARK: - extensions
+// MARK: - UICollectionViewDelegate/DataSource
 
-extension FeedController: UICollectionViewDelegateFlowLayout, TweetCellDelegate{
-    func handleProfileImageTapped(_ cell: TweetCell) {
-        guard let user = cell.tweet?.user else {return}
-        
-        let profileController = ProfileController(user: user)
-        navigationController?.pushViewController(profileController, animated: true)
-    }
-    
+extension FeedController{
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section:Int) -> Int {
         return tweets.count
     }
@@ -92,7 +85,38 @@ extension FeedController: UICollectionViewDelegateFlowLayout, TweetCellDelegate{
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tweetControler = TweetController(tweet: tweets[indexPath.row])
+        navigationController?.pushViewController(tweetControler, animated: true)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension FeedController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 120)
+        let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+        let height = viewModel.size(forWidth: view.frame.width).height
+        return CGSize(width: view.frame.width, height: height + 72)
+    }
+}
+
+// MARK: - TweetCellDelegate
+
+extension FeedController: TweetCellDelegate {
+    func handleReplyTapped(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else {return}
+        
+        let uploadController = UploadTweetController(user: tweet.user, config: .reply(tweet))
+        let nav = UINavigationController(rootViewController: uploadController)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
+    }
+    
+    func handleProfileImageTapped(_ cell: TweetCell) {
+        guard let user = cell.tweet?.user else {return}
+        
+        let profileController = ProfileController(user: user)
+        navigationController?.pushViewController(profileController, animated: true)
     }
 }

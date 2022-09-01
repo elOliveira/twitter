@@ -40,14 +40,12 @@ class MainTabController: UITabBarController {
     // MARK: - API
     func authenticateUserAndConfigureUI(){
         if Auth.auth().currentUser == nil {
-            print("ta log nao")
             DispatchQueue.main.async {
                 let loginController = UINavigationController(rootViewController: LoginController())
                 loginController.modalPresentationStyle = .fullScreen
                 self.present(loginController, animated: true)
             }
         } else {
-            print("ta log")
             configureViewControllers()
             configureUi()
             fetchUser()
@@ -73,7 +71,7 @@ class MainTabController: UITabBarController {
 
     @objc func actionButtonTapped(){
         guard let user = user else { return }
-        let uploadTweetController = UploadTweetController(user:user)
+        let uploadTweetController = UploadTweetController(user:user, config: .tweet)
         let nav = UINavigationController(rootViewController: uploadTweetController)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)

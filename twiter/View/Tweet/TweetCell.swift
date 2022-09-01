@@ -9,6 +9,7 @@ import UIKit
 
 protocol TweetCellDelegate: AnyObject {
     func handleProfileImageTapped(_ cell: TweetCell)
+    func handleReplyTapped(_ cell: TweetCell)
 }
 
 class TweetCell: UICollectionViewCell {
@@ -20,11 +21,6 @@ class TweetCell: UICollectionViewCell {
     }
     
     weak var delegate: TweetCellDelegate?
-    
-    @objc func handleProfileImageTapped(){
-        print("APERTOU Aqui na minha cell")
-        delegate?.handleProfileImageTapped(self)
-    }
     
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -152,12 +148,16 @@ class TweetCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     // MARK: - Selectors
-    @objc func handleCommentTapped(){
-        
+    @objc func handleProfileImageTapped(){
+        print("APERTOU Aqui na minha cell")
+        delegate?.handleProfileImageTapped(self)
     }
     
-    @objc func handleRetweetTapped(){
-        
+    @objc func handleRetweetTapped(){}
+    
+    @objc func handleCommentTapped(){
+        delegate?.handleReplyTapped(self)
+
     }
     
     @objc func handleLikeTapped(){

@@ -5,7 +5,6 @@
 //  Created by cit on 16/08/22.
 //
 
-import Foundation
 import UIKit
 
 class CaptionTextView: UITextView {
@@ -25,7 +24,7 @@ class CaptionTextView: UITextView {
         backgroundColor = .white
         font = UIFont.systemFont(ofSize: 16)
         isScrollEnabled = false
-        heightAnchor.constraint(equalToConstant: 300).isActive = true
+        heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         addSubview(placeholderLabel)
         placeholderLabel.anchor(

@@ -76,7 +76,7 @@ class ProfileController: UICollectionViewController {
     }
 }
 
-// MARK: - Extensions
+// MARK: - UICollectionViewDelegate
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -86,6 +86,7 @@ extension ProfileController {
         return header
     }
 }
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension ProfileController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -93,9 +94,13 @@ extension ProfileController : UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 120)
+        let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+        let captionHeight = viewModel.size(forWidth: view.frame.width).height
+        return CGSize(width: view.frame.width, height: captionHeight + 72)
+       // return CGSize(width: view.frame.width, height: 120)// TODO: - AJUSTAR ALTURA UTILIZANDO o size da vm
     }
 }
+// MARK: - UICollectionViewDataSource/Delegate
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -106,6 +111,11 @@ extension ProfileController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tweetControler = TweetController(tweet: tweets[indexPath.row])
+        navigationController?.pushViewController(tweetControler, animated: true)
     }
 }
 
