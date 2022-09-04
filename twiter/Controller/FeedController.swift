@@ -40,11 +40,13 @@ class FeedController: UICollectionViewController {
     // MARK: - API
 
     func fetchTweets(){
-        TweetService.shared.fetchTweets { tweet in
-            self.tweets = tweet
+        TweetService.shared.fetchTweets { tweets in
+            self.tweets = tweets
+            self.checkIfUserLikedTweets(self.tweets)
         }
     }
-    
+    // MARK: - Helpers
+
     func configureUi() {
         view.backgroundColor = .white
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -54,8 +56,7 @@ class FeedController: UICollectionViewController {
         imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
     }
-    // MARK: - Helpers
-
+    
     func configureLeftBarButton(){
         guard let user = user else { return }
         
@@ -67,6 +68,15 @@ class FeedController: UICollectionViewController {
         
         profileImageView.sd_setImage(with: user.profileImageUrl,completed: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+    }
+    
+    func checkIfUserLikedTweets(_ tweets: [Tweet]){
+        for(index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                guard didLike == true else { return }
+                self.tweets[index].didLike = true
+            }
+        }
     }
 
 }
@@ -99,10 +109,19 @@ extension FeedController: UICollectionViewDelegateFlowLayout{
         return CGSize(width: view.frame.width, height: height + 72)
     }
 }
-
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
+    func handleLikeTapped(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
+        
+        TweetService.shared.likeTweet(tweet: tweet) { (err,ref) in
+            cell.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            cell.tweet?.likes = likes
+        }
+    }
+    
     func handleReplyTapped(_ cell: TweetCell) {
         guard let tweet = cell.tweet else {return}
         
