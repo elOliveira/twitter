@@ -33,13 +33,14 @@ class ProfileController: UICollectionViewController {
         fetchTweets()
         checkIfUserIsFollowed()
         chechStars()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isHidden = true
+        checkIfUserIsFollowed()
+        chechStars()
     }
     
     func fetchTweets(){
@@ -69,8 +70,8 @@ class ProfileController: UICollectionViewController {
     func chechStars(){
         guard let user = user else { return }
 
-        UserService.shared.fetchUserStars(uid:user.uid) { stats in
-            self.user?.stats = stats
+        UserService.shared.fetchUserStars(uid:user.uid) { stars in
+            self.user?.stats = stars
             self.collectionView.reloadData()
         }
     }
