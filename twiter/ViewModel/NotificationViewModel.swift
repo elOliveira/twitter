@@ -45,7 +45,7 @@ struct NotificationViewModel {
         )
         
         attributedText.append(NSAttributedString(string: notificationMessage,
-                                                  attributes:[.font: UIFont.boldSystemFont(ofSize: 12)]))
+                                                 attributes:[NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]))
         
         attributedText.append(NSAttributedString(string: " \(timestamp)",
                                                   attributes:
@@ -57,6 +57,14 @@ struct NotificationViewModel {
         
         return attributedText
         
+    }
+    
+    var shouldHideFollowButton: Bool {
+        return type != .follow
+    }
+    
+    var followButtonText: String {
+        return user.isFolowed ? "Following" : "Follow"
     }
     
     init(notification: Notification) {

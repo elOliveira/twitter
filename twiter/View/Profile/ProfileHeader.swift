@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol ProfileHeaderDelegate: AnyObject {
     func handleDismissal()
@@ -56,16 +57,27 @@ class ProfileHeader : UICollectionReusableView {
         return iv
     }()
     
-     lazy var editProfileFollowButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Loading", for: .normal)
-        button.layer.borderColor = UIColor.twitterBlue.cgColor
-        button.layer.borderWidth = 1.25
-        button.setTitleColor(.twitterBlue, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(handleEditProfileFollow), for: .touchUpInside)
-        return button
-    }()
+    lazy var editProfileFollowButton: UIButton = {
+       let button = UIButton(type: .system)
+       button.setTitle("Loading", for: .normal)
+       button.layer.borderColor = UIColor.twitterBlue.cgColor
+       button.layer.borderWidth = 1.25
+       button.setTitleColor(.twitterBlue, for: .normal)
+       button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+       button.addTarget(self, action: #selector(handleEditProfileFollow), for: .touchUpInside)
+       return button
+   }()
+    
+    lazy var exit: UIButton = {
+       let button = UIButton(type: .system)
+       button.setTitle("exit", for: .normal)
+        button.layer.borderColor = UIColor.red.cgColor
+       button.layer.borderWidth = 1.25
+        button.setTitleColor(.red, for: .normal)
+       button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+       button.addTarget(self, action: #selector(exitAction), for: .touchUpInside)
+       return button
+   }()
     
     private let fullnameLabel: UILabel = {
        let label = UILabel()
@@ -149,6 +161,15 @@ class ProfileHeader : UICollectionReusableView {
             paddingTop: 12,
             paddingRight:12
         )
+        
+        addSubview(exit)
+        exit.anchor(
+            top:containerView.bottomAnchor,
+            right:  editProfileFollowButton.leftAnchor,
+            paddingTop: 12,
+            paddingLeft:12
+        )
+        
         editProfileFollowButton.setDimensions(width: 100, height: 36)
         editProfileFollowButton.layer.cornerRadius = 36/2
         
@@ -213,6 +234,17 @@ class ProfileHeader : UICollectionReusableView {
     @objc func handleFollowingTapped(){
         
     }
+    
+    @objc func exitAction(){
+        do {
+            try Auth.auth().signOut()
+            
+        } catch let error {
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+        }
+        
+    }
+    
 
     // MARK: - Helpers
 
