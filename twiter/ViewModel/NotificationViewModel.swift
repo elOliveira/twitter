@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+
 struct NotificationViewModel {
     
     private let notification: Notification
